@@ -1,20 +1,24 @@
-<h1>Welcome to SvelteKit</h1>
-<p>
-    Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
-</p>
+<script>
+    import FileChooser from "./FileChooser.svelte";
 
-<div class="card card-side bg-base-100 shadow-xl m-4">
-    <figure>
-        <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-            alt="Movie"
-        />
-    </figure>
-    <div class="card-body">
-        <h2 class="card-title">New movie is released!</h2>
-        <p>Click the button to watch on Jetflix app.</p>
-        <div class="card-actions justify-end">
-            <button class="btn btn-primary">Watch</button>
-        </div>
+    import MovieCard from "./MovieCard.svelte";
+    import ThemeSwitcher from "./ThemeSwitcher.svelte";
+</script>
+
+<div class="navbar bg-base-100">
+    <div class="flex-1">
+        <a class="btn btn-ghost text-xl" href="/">
+            <img src="/logo.png" alt="Movie Scraper logo" class="w-36 h-14" />
+        </a>
     </div>
+    <div class="flex-none">
+        <ThemeSwitcher />
+    </div>
+</div>
+
+<div class="container mx-auto mt-4">
+    <FileChooser />
+    <MovieCard />
+    <MovieCard />
+    <MovieCard />
 </div>
