@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@ctrl/video-filename-parser':
+        specifier: ^5.2.1
+        version: 5.2.1
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
@@ -51,6 +55,10 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@ctrl/video-filename-parser@5.2.1':
+    resolution: {integrity: sha512-kZ6guBOYhRIxAyJ9I7Lwn5/cxyY24AyNb3gn4xrW7L/CS8yBh1BSVne/rysWOnkbu09BmOcUTh3+ojnPGo6WXA==}
+    engines: {node: '>=18'}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -975,6 +983,8 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
+
+  '@ctrl/video-filename-parser@5.2.1': {}
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
