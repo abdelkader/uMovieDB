@@ -1,8 +1,6 @@
 <script lang="ts">
-    import FileChooser from "./FileChooser.svelte";
     import MovieCard from "./MovieCard.svelte";
     import ThemeSwitcher from "./ThemeSwitcher.svelte";
-
     import Progress from "$lib/Progress.svelte";
 
     let files: any;
@@ -28,15 +26,16 @@
 
 <div class="navbar bg-base-100">
     <div class="flex-1">
-        <a class="btn btn-ghost text-xl" href="/"> Movie Scraper </a>
+        <img src="/movie-logo.png" alt="logo" class="h-10 w-12" />
+        <a class="btn btn-ghost text-xl -m-3" href="/"> Movie Scraper </a>
     </div>
     <div class="flex-none">
         <ThemeSwitcher />
     </div>
 </div>
 
-<div class="container mx-auto mt-10">
-    <div>
+<div class="md:container md:mx-auto mt-10">
+    <div class="flex justify-center mb-8">
         <input
             multiple
             bind:files
@@ -45,6 +44,7 @@
                  w-full max-w-xs"
             on:change={async () => {
                 if (files) {
+                    results = [];
                     const MovieWorker = await import(
                         "$lib/movie.worker?worker"
                     );
@@ -69,9 +69,9 @@
         <Progress bind:circumference bind:percent />
     {/if}
 
-    {#await results then results}
+    <div class="flex flex-wrap gap-x-8 gap-y-4">
         {#each results as movie}
             <MovieCard {movie} />
         {/each}
-    {/await}
+    </div>
 </div>
