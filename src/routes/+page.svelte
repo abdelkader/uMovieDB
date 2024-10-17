@@ -1,5 +1,7 @@
 <script lang="ts">
-    import MovieCard from "./MovieCard.svelte";
+    import MovieCardVertical from "./MovieCardVertical.svelte";
+    import MovieCardHorizantal from "./MovieCardHorizantal.svelte";
+
     import ThemeSwitcher from "./ThemeSwitcher.svelte";
     import Progress from "$lib/Progress.svelte";
 
@@ -8,6 +10,20 @@
     let circumference = 2 * Math.PI * 30;
     let percent = 0;
     let selected: string = "title";
+
+    enum DISPOSITION {
+        Horizontal,
+        Vertical,
+    }
+    let disposition: DISPOSITION = DISPOSITION.Horizontal;
+    function DispositionChanged() {
+        console.log(disposition);
+        if (disposition == DISPOSITION.Horizontal) {
+            disposition = DISPOSITION.Vertical;
+        } else {
+            disposition = DISPOSITION.Horizontal;
+        }
+    }
 
     function OrderChanged() {
         results = results.sort((a, b) => {
@@ -68,10 +84,43 @@
     {#if results.length > 0}
         <Progress bind:circumference bind:percent />
     {/if}
-
+    <div class="flex">
+        <div class="form-control">
+            <label class="label cursor-pointer">
+                <span class="label-text pr-2">Horizontal</span>
+                <input
+                    type="radio"
+                    name="radio-10"
+                    class="radio checked:bg-red-500"
+                    checked={disposition == DISPOSITION.Horizontal}
+                    on:click={() => {
+                        DispositionChanged();
+                    }}
+                />
+            </label>
+        </div>
+        <div class="form-control">
+            <label class="label cursor-pointer">
+                <span class="label-text pr-2">Vertical</span>
+                <input
+                    type="radio"
+                    name="radio-10"
+                    class="radio checked:bg-blue-500"
+                    checked={disposition == DISPOSITION.Vertical}
+                    on:click={() => {
+                        DispositionChanged();
+                    }}
+                />
+            </label>
+        </div>
+    </div>
     <div class="flex flex-wrap gap-x-8 gap-y-4">
         {#each results as movie}
-            <MovieCard {movie} />
+            {#if disposition == DISPOSITION.Horizontal}
+                <MovieCardHorizantal {movie} />
+            {:else}
+                <MovieCardVertical {movie} />
+            {/if}
         {/each}
     </div>
 </div>
