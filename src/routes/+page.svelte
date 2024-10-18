@@ -17,7 +17,6 @@
     }
     let disposition: DISPOSITION = DISPOSITION.Horizontal;
     function DispositionChanged() {
-        console.log(disposition);
         if (disposition == DISPOSITION.Horizontal) {
             disposition = DISPOSITION.Vertical;
         } else {
