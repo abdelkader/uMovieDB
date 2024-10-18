@@ -11,7 +11,7 @@
         <figure>
             <img
                 src="https://image.tmdb.org/t/p/w500/{movie.poster_path}?height=120&width=200"
-                alt="Shoes"
+                alt="Poster"
             />
         </figure>
         <div class="card-body">
@@ -42,11 +42,7 @@
                         >
                     </p>
                 </div>
-                <div
-                    class="bg-red-500 px-3 py-1 rounded-full text-xs font-medium text-white hidden block"
-                >
-                    Super !
-                </div>
+               
             </div>
             <div class="text-gray-500 font-black">{movie.filename}</div>
         </div>
