@@ -7,7 +7,7 @@
 </script>
 
 {#if movie}
-    <div class="card bg-base-100 w-80 shadow-xl">
+    <div class="card mx-auto bg-base-100 w-80 shadow-xl">
         <figure>
             <img
                 src="https://image.tmdb.org/t/p/w500/{movie.poster_path}?height=120&width=200"

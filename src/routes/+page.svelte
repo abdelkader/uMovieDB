@@ -39,24 +39,19 @@
     }
 </script>
 
-<div class="navbar bg-base-100">
-    <div class="flex-1">
+<div class="navbar bg-base-100 justify-between">
+    <div class="flex">
         <img src="/movie-logo.png" alt="logo" class="h-10 w-12" />
         <a class="btn btn-ghost text-xl -m-3" href="/"> Movie Scraper </a>
     </div>
-    <div class="flex-none">
-        <ThemeSwitcher />
-    </div>
-</div>
-
-<div class="md:container md:mx-auto mt-10">
-    <div class="flex justify-center mb-8">
+    <div class="flex">
         <input
             multiple
             bind:files
             type="file"
-            class="file-input file-input-bordered file-input-sm file-input-accent
-                 w-full max-w-xs"
+            class="file-input file-input-bordered
+                    file-input-sm file-input-accent
+                     w-full max-w-xs mt-2"
             on:change={async () => {
                 if (files) {
                     results = [];
@@ -79,41 +74,71 @@
                 files = null;
             }}
         />
+        {#if results.length > 0}
+            <Progress bind:circumference bind:percent />
+        {/if}
     </div>
-    {#if results.length > 0}
-        <Progress bind:circumference bind:percent />
-    {/if}
     <div class="flex">
-        <div class="form-control">
-            <label class="label cursor-pointer">
-                <span class="label-text pr-2">Horizontal</span>
-                <input
-                    type="radio"
-                    name="radio-10"
-                    class="radio checked:bg-red-500"
-                    checked={disposition == DISPOSITION.Horizontal}
-                    on:click={() => {
-                        DispositionChanged();
-                    }}
-                />
-            </label>
-        </div>
-        <div class="form-control">
-            <label class="label cursor-pointer">
-                <span class="label-text pr-2">Vertical</span>
-                <input
-                    type="radio"
-                    name="radio-10"
-                    class="radio checked:bg-blue-500"
-                    checked={disposition == DISPOSITION.Vertical}
-                    on:click={() => {
-                        DispositionChanged();
-                    }}
-                />
-            </label>
-        </div>
+        <ThemeSwitcher />
     </div>
-    <div class="flex flex-wrap gap-x-8 gap-y-4">
+</div>
+
+<div class="md:container md:mx-auto mt-4">
+    {#if results.length > 0}
+        <div class="flex justify-between">
+            <div class="flex">
+                <div class="flex items-center me-4">
+                    <input
+                        type="radio"
+                        name="radio-10"
+                        class="radio checked:bg-red-500"
+                        checked={disposition == DISPOSITION.Horizontal}
+                        on:click={() => {
+                            DispositionChanged();
+                        }}
+                    />
+                    <label
+                        for="red-radio"
+                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >Horizontal</label
+                    >
+                </div>
+                <div class="flex items-center me-4">
+                    <input
+                        type="radio"
+                        name="radio-10"
+                        class="radio checked:bg-blue-500"
+                        checked={disposition == DISPOSITION.Vertical}
+                        on:click={() => {
+                            DispositionChanged();
+                        }}
+                    />
+                    <label
+                        for="green-radio"
+                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >Vertical</label
+                    >
+                </div>
+            </div>
+
+            <div class="flex">
+                <select
+                    bind:value={selected}
+                    on:change={() => OrderChanged()}
+                    id="order-by"
+                    class="select select-accent select-sm w-full max-w-xs"
+                >
+                    <option disabled>Order by</option>
+                    <option selected value="title">Title</option>
+                    <option value="year">Year</option>
+                    <option value="rating">Rating</option>
+                    <option value="VoteCount">Vote Count</option>
+                </select>
+            </div>
+        </div>
+    {/if}
+
+    <div class="flex flex-wrap gap-x-8 gap-y-4 mt-4">
         {#each results as movie}
             {#if disposition == DISPOSITION.Horizontal}
                 <MovieCardHorizantal {movie} />
