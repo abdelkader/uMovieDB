@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { Divide } from "lucide-svelte";
-
     export let movie;
 
     function getYear(dateString: string) {
@@ -9,29 +7,70 @@
 </script>
 
 {#if movie}
-    <div
-        class="flex flex-col bg-white border border-gray-200 rounded-lg
-        shadow md:flex-row
-        hover:bg-gray-100 dark:border-gray-700
-         dark:bg-gray-800 dark:hover:bg-gray-700"
-    >
-        <img
-            class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-72 md:rounded-none md:rounded-s-lg"
-            src="https://image.tmdb.org/t/p/w500/{movie.poster_path}"
-            alt=""
-        />
-        <div class="flex flex-col justify-between p-4 leading-normal">
-            <h5
-                class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+    <div class="flex flex-row pt-2">
+        <div
+            class="relative flex flex-col md:flex-row
+        md:space-x-5 space-y-3
+        md:space-y-0 rounded-xl shadow-lg p-3 max-w-md
+        md:max-w-3xl mx-auto border border-white bg-white
+        dark:border-gray-700
+         dark:bg-gray-800"
+        >
+            <div
+                class=" w-full md:w-1/3 bg-white grid place-items-center
+             dark:border-gray-700
+         dark:bg-gray-800"
             >
-                {movie.title} ({getYear(movie.release_date)})
-                {#if movie.vote_average >= 7}
-                    <div class="badge badge-secondary">Hot!</div>
-                {/if}
-            </h5>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                {movie.overview}
-            </p>
+                <img
+                    src="https://image.tmdb.org/t/p/w500/{movie.poster_path}?height=200&width=200"
+                    alt="poster"
+                    class="rounded-xl"
+                />
+            </div>
+            <div
+                class="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3
+             dark:border-gray-700
+         dark:bg-gray-800"
+            >
+                <div class="flex justify-between item-center">
+                    <div class="flex items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-yellow-500"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                            />
+                        </svg>
+
+                        <p class="text-gray-600 font-bold text-sm ml-1">
+                            {Math.floor(movie.vote_average * 10)}%
+                            <span class="text-gray-500 font-normal"
+                                >({movie.vote_count} Count)</span
+                            >
+                        </p>
+                    </div>
+                    {#if movie.vote_average >= 7}
+                        <div
+                            class="bg-red-500 px-3 py-1 rounded-full text-xs f
+                ont-medium text-white hidden md:block"
+                        >
+                            Super !
+                        </div>
+                    {/if}
+                </div>
+                <h3 class="font-black text-gray-800 text-xl dark:text-white">
+                    {movie.title} ({getYear(movie.release_date)})
+                </h3>
+                <p class=" text-gray-500">
+                    {movie.overview}
+                </p>
+                <p class="pt-5 text-gray-500 font-black">
+                    {movie.filename}
+                </p>
+            </div>
         </div>
     </div>
 {/if}
