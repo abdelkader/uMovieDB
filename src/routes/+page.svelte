@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Logo from "./Logo.svelte";
+
     import MovieCardVertical from "./MovieCardVertical.svelte";
     import MovieCardHorizantal from "./MovieCardHorizantal.svelte";
 
@@ -40,10 +42,7 @@
 </script>
 
 <div class="navbar bg-base-100 justify-between">
-    <div class="flex">
-        <img src="/movie-logo.png" alt="logo" class="h-10 w-12" />
-        <a class="btn btn-ghost text-xl -m-3" href="/"> Movie Scraper </a>
-    </div>
+    <Logo></Logo>
     <div class="flex">
         <input
             multiple
@@ -78,9 +77,8 @@
             <Progress bind:circumference bind:percent />
         {/if}
     </div>
-    <div class="flex">
-        <ThemeSwitcher />
-    </div>
+
+    <ThemeSwitcher />
 </div>
 
 <div class="md:container md:mx-auto mt-4">
