@@ -1,4 +1,7 @@
 <script lang="ts">
+    import LayoutHandler from "./LayoutHandler.svelte";
+    import { LAYOUT } from "$lib/layout";
+    import OrderHandler from "./OrderHandler.svelte";
     import Logo from "./Logo.svelte";
 
     import MovieCardVertical from "./MovieCardVertical.svelte";
@@ -11,31 +14,27 @@
     let results: any[] = [];
     let circumference = 2 * Math.PI * 30;
     let percent = 0;
-    let selected: string = "title";
 
-    enum DISPOSITION {
-        Horizontal,
-        Vertical,
-    }
-    let disposition: DISPOSITION = DISPOSITION.Horizontal;
-    function DispositionChanged() {
-        if (disposition == DISPOSITION.Horizontal) {
-            disposition = DISPOSITION.Vertical;
-        } else {
-            disposition = DISPOSITION.Horizontal;
-        }
+    let layout: LAYOUT = LAYOUT.Horizontal;
+
+    function DispositionChanged(event: any) {
+        event.detail.value == LAYOUT.Horizontal
+            ? (layout = LAYOUT.Horizontal)
+            : (layout = LAYOUT.Vertical);
     }
 
-    function OrderChanged() {
+    function OrderChanged(event: any) {
+        let selected = event.detail.value;
         results = results.sort((a, b) => {
-            if (selected == "title") {
-                return a.title.localeCompare(b.title);
-            } else if (selected == "year") {
-                return a.release_date.localeCompare(b.release_date);
-            } else if (selected == "rating") {
-                return b.vote_average - a.vote_average;
-            } else if (selected == "VoteCount") {
-                return b.vote_count - a.vote_count;
+            switch (selected) {
+                case "title":
+                    return a.title.localeCompare(b.title);
+                case "year":
+                    return a.release_date.localeCompare(b.release_date);
+                case "rating":
+                    return b.vote_average - a.vote_average;
+                case "VoteCount":
+                    return b.vote_count - a.vote_count;
             }
         });
     }
@@ -85,60 +84,18 @@
     {#if results.length > 0}
         <div class="flex justify-between">
             <div class="flex">
-                <div class="flex items-center me-4">
-                    <input
-                        type="radio"
-                        name="radio-10"
-                        class="radio checked:bg-red-500"
-                        checked={disposition == DISPOSITION.Horizontal}
-                        on:click={() => {
-                            DispositionChanged();
-                        }}
-                    />
-                    <label
-                        for="red-radio"
-                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                        >Horizontal</label
-                    >
-                </div>
-                <div class="flex items-center me-4">
-                    <input
-                        type="radio"
-                        name="radio-10"
-                        class="radio checked:bg-blue-500"
-                        checked={disposition == DISPOSITION.Vertical}
-                        on:click={() => {
-                            DispositionChanged();
-                        }}
-                    />
-                    <label
-                        for="green-radio"
-                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                        >Vertical</label
-                    >
-                </div>
+                <LayoutHandler on:layout-changed={DispositionChanged} />
             </div>
 
             <div class="flex">
-                <select
-                    bind:value={selected}
-                    on:change={() => OrderChanged()}
-                    id="order-by"
-                    class="select select-accent select-sm w-full max-w-xs"
-                >
-                    <option disabled>Order by</option>
-                    <option selected value="title">Title</option>
-                    <option value="year">Year</option>
-                    <option value="rating">Rating</option>
-                    <option value="VoteCount">Vote Count</option>
-                </select>
+                <OrderHandler on:order-changed={OrderChanged} />
             </div>
         </div>
     {/if}
 
     <div class="flex flex-wrap gap-x-8 gap-y-4 mt-4">
         {#each results as movie}
-            {#if disposition == DISPOSITION.Horizontal}
+            {#if layout == LAYOUT.Horizontal}
                 <MovieCardHorizantal {movie} />
             {:else}
                 <MovieCardVertical {movie} />
