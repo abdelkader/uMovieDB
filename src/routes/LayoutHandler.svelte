@@ -5,11 +5,18 @@
     const dispatch = createEventDispatcher();
 
     let layout: LAYOUT = LAYOUT.Horizontal;
-    function DispositionChanged() {
-        if (layout == LAYOUT.Horizontal) {
-            layout = LAYOUT.Vertical;
-        } else {
-            layout = LAYOUT.Horizontal;
+    function DispositionChanged(evt: any) {
+        layout = event.currentTarget.value
+        switch (layout) {
+            case LAYOUT.Horizontal:
+                layout = LAYOUT.Horizontal;
+                break;
+            case LAYOUT.Vertical:
+                layout = LAYOUT.Vertical;
+                break;
+            case LAYOUT.Table:
+                layout = LAYOUT.Table;
+                break;
         }
 
         dispatch("layout-changed", {
@@ -24,9 +31,8 @@
         name="radio-10"
         class="radio checked:bg-red-500"
         checked={layout == LAYOUT.Horizontal}
-        on:click={() => {
-            DispositionChanged();
-        }}
+        value={LAYOUT.Horizontal}
+        on:change={DispositionChanged}
     />
     <label
         for="red-radio"
@@ -40,13 +46,27 @@
         name="radio-10"
         class="radio checked:bg-blue-500"
         checked={layout == LAYOUT.Vertical}
-        on:click={() => {
-            DispositionChanged();
-        }}
+        value={LAYOUT.Vertical}
+        on:change={DispositionChanged}
     />
     <label
         for="green-radio"
         class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         >Vertical</label
+    >
+</div>
+<div class="flex items-center me-4">
+    <input
+        type="radio"
+        name="radio-10"
+        class="radio checked:bg-blue-500"
+        checked={layout == LAYOUT.Table}
+        value={LAYOUT.Table}
+        on:change={DispositionChanged}
+    />
+    <label
+        for="green-radio"
+        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >Table</label
     >
 </div>

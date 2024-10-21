@@ -7,8 +7,9 @@
 </script>
 
 {#if movie}
+
     <div
-        class="relative flex flex-row md:flex-row
+        class="w-full relative flex flex-row md:flex-row
         md:space-x-5 space-y-3
         md:space-y-0 rounded-xl shadow-lg p-3 max-w-md
         md:max-w-3xl mx-auto border border-white bg-white

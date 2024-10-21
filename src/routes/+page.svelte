@@ -6,6 +6,7 @@
 
     import MovieCardVertical from "./MovieCardVertical.svelte";
     import MovieCardHorizantal from "./MovieCardHorizantal.svelte";
+    import MovieCardTable from "./MovieCardTable.svelte";
 
     import ThemeSwitcher from "./ThemeSwitcher.svelte";
     import Progress from "$lib/Progress.svelte";
@@ -18,9 +19,9 @@
     let layout: LAYOUT = LAYOUT.Horizontal;
 
     function DispositionChanged(event: any) {
-        event.detail.value == LAYOUT.Horizontal
-            ? (layout = LAYOUT.Horizontal)
-            : (layout = LAYOUT.Vertical);
+        layout = event.detail.value;
+        
+        
     }
 
     function OrderChanged(event: any) {
@@ -81,7 +82,7 @@
 </div>
 
 <div class="md:container md:mx-auto mt-4">
-    {#if results.length > 0}
+    <!-- {#if results.length > 0} -->
         <div class="flex justify-between">
             <div class="flex">
                 <LayoutHandler on:layout-changed={DispositionChanged} />
@@ -91,14 +92,16 @@
                 <OrderHandler on:order-changed={OrderChanged} />
             </div>
         </div>
-    {/if}
+    <!-- {/if} -->
 
     <div class="flex flex-wrap gap-x-8 gap-y-4 mt-4">
         {#each results as movie}
             {#if layout == LAYOUT.Horizontal}
                 <MovieCardHorizantal {movie} />
-            {:else}
+            {:else if layout == LAYOUT.Vertical}
                 <MovieCardVertical {movie} />
+            {:else}
+                <MovieCardTable {movie} />
             {/if}
         {/each}
     </div>
