@@ -72,7 +72,7 @@
             }}
         />
         {#if movies.length > 0}
-            <Progress bind:circumference bind:percent />
+            <Progress {percent} />
         {/if}
     </div>
 
