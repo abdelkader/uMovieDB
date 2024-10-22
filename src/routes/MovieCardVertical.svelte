@@ -1,12 +1,12 @@
 <script lang="ts">
-    export let movie;
+    export let movies;
 
     function getYear(dateString: string) {
         return dateString.split("-")[0];
     }
 </script>
 
-{#if movie}
+{#each  movies as movie}
     <div class="card mx-auto bg-base-100 w-80 shadow-xl">
         <figure>
             <img
@@ -47,4 +47,4 @@
             <div class="text-gray-500 font-black">{movie.filename}</div>
         </div>
     </div>
-{/if}
+{/each}

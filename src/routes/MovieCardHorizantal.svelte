@@ -1,13 +1,13 @@
 <script lang="ts">
-    export let movie;
+    export let movies;
 
     function getYear(dateString: string) {
         return dateString.split("-")[0];
     }
 </script>
 
-{#if movie}
 
+{#each  movies as movie}
     <div
         class="w-full relative flex flex-row md:flex-row
         md:space-x-5 space-y-3
@@ -72,4 +72,4 @@
             </p>
         </div>
     </div>
-{/if}
+{/each}

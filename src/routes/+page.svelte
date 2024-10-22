@@ -12,7 +12,7 @@
     import Progress from "$lib/Progress.svelte";
 
     let files: any;
-    let results: any[] = [];
+    let movies: any[] = [];
     let circumference = 2 * Math.PI * 30;
     let percent = 0;
 
@@ -21,12 +21,11 @@
     function DispositionChanged(event: any) {
         layout = event.detail.value;
         
-        
     }
 
     function OrderChanged(event: any) {
         let selected = event.detail.value;
-        results = results.sort((a, b) => {
+        movies = movies.sort((a, b) => {
             switch (selected) {
                 case "title":
                     return a.title.localeCompare(b.title);
@@ -53,7 +52,7 @@
                      w-full max-w-xs mt-2"
             on:change={async () => {
                 if (files) {
-                    results = [];
+                    movies = [];
                     const MovieWorker = await import(
                         "$lib/movie.worker?worker"
                     );
@@ -61,9 +60,9 @@
                     movieWorker.postMessage({ files });
                     movieWorker.onmessage = (event) => {
                         if (event.data) {
-                            results = [...results, event.data];
+                            movies = [...movies, event.data];
                             percent = Math.ceil(
-                                (results.length / files.length) * 100,
+                                (movies.length / files.length) * 100,
                             );
                         }
                     };
@@ -73,7 +72,7 @@
                 files = null;
             }}
         />
-        {#if results.length > 0}
+        {#if movies.length > 0}
             <Progress bind:circumference bind:percent />
         {/if}
     </div>
@@ -82,27 +81,38 @@
 </div>
 
 <div class="md:container md:mx-auto mt-4">
-    <!-- {#if results.length > 0} -->
-        <div class="flex justify-between">
-            <div class="flex">
-                <LayoutHandler on:layout-changed={DispositionChanged} />
-            </div>
-
+    <!-- {#if movies.length > 0} -->
+    <div class="flex justify-between">
+        <div class="flex">
+            <LayoutHandler on:layout-changed={DispositionChanged} />
+        </div>
+        
+        {#if layout != LAYOUT.Table}
             <div class="flex">
                 <OrderHandler on:order-changed={OrderChanged} />
             </div>
+            {:else}
+            <label for="table-search" class="sr-only">Search</label>
+<div class="relative">
+    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+        </svg>
+    </div>
+    <input type="text" id="table-search-users" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for movies">
+</div>
+            {/if}
         </div>
+     
     <!-- {/if} -->
 
     <div class="flex flex-wrap gap-x-8 gap-y-4 mt-4">
-        {#each results as movie}
             {#if layout == LAYOUT.Horizontal}
-                <MovieCardHorizantal {movie} />
+                <MovieCardHorizantal {movies} />
             {:else if layout == LAYOUT.Vertical}
-                <MovieCardVertical {movie} />
+                <MovieCardVertical {movies} />
             {:else}
-                <MovieCardTable {movie} />
+                <MovieCardTable {movies} />
             {/if}
-        {/each}
     </div>
 </div>
