@@ -6,7 +6,7 @@
 
     let layout: LAYOUT = LAYOUT.Horizontal;
     function DispositionChanged(evt: any) {
-        layout = event.currentTarget.value
+        layout = evt.currentTarget.value;
         switch (layout) {
             case LAYOUT.Horizontal:
                 layout = LAYOUT.Horizontal;

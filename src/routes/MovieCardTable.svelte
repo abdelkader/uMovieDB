@@ -1,8 +1,17 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte";
+
+    const dispatch = createEventDispatcher();
+    function OrderChanged(value: string) {
+        dispatch("order-changed", {
+            value: value,
+        });
+    }
     import MovieTableItem from "./MovieTableItem.svelte";
     export let movies;
 </script>
 
+<!-- svelte-ignore a11y-invalid-attribute -->
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
     <table
         class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -14,7 +23,7 @@
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center">
                         Title
-                        <a href="#"
+                        <a on:click={() => OrderChanged("title")} href="#"
                             ><svg
                                 class="w-3 h-3 ms-1.5"
                                 aria-hidden="true"
@@ -32,7 +41,7 @@
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center">
                         Year
-                        <a href="#"
+                        <a on:click={() => OrderChanged("year")} href="#"
                             ><svg
                                 class="w-3 h-3 ms-1.5"
                                 aria-hidden="true"
@@ -50,7 +59,7 @@
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center">
                         Vote Average
-                        <a href="#"
+                        <a on:click={() => OrderChanged("rating")} href="#"
                             ><svg
                                 class="w-3 h-3 ms-1.5"
                                 aria-hidden="true"
@@ -68,7 +77,7 @@
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center">
                         Vote Count
-                        <a href="#"
+                        <a on:click={() => OrderChanged("VoteCount")} href="#"
                             ><svg
                                 class="w-3 h-3 ms-1.5"
                                 aria-hidden="true"
