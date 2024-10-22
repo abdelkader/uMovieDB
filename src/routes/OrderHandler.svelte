@@ -1,5 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
+    import { t } from "svelte-i18n";
+
     const dispatch = createEventDispatcher();
 
     let selected = "title";
@@ -17,9 +19,9 @@
     id="order-by"
     class="select select-accent select-sm w-full max-w-xs"
 >
-    <option disabled>Order by</option>
-    <option selected value="title">Title</option>
-    <option value="year">Year</option>
-    <option value="rating">Rating</option>
-    <option value="VoteCount">Vote Count</option>
+    <option disabled>{$t("OrderBy")}</option>
+    <option selected value="title"> {$t("Title")} </option>
+    <option value="year">{$t("Year")}</option>
+    <option value="rating">{$t("Rating")}</option>
+    <option value="VoteCount">{$t("VoteCount")}</option>
 </select>
