@@ -21,7 +21,7 @@
 >
     <option disabled>{$t("OrderBy")}</option>
     <option selected value="title"> {$t("Title")} </option>
-    <option value="year">{$t("Year")}</option>
+    <option value="year">⤵️ {$t("Year")}</option>
     <option value="rating">{$t("Rating")}</option>
     <option value="VoteCount">{$t("VoteCount")}</option>
 </select>

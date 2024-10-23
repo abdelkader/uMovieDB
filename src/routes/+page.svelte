@@ -10,11 +10,11 @@
 
     import ThemeSwitcher from "./ThemeSwitcher.svelte";
     import Progress from "$lib/Progress.svelte";
+    import LangSwitcher from "./LangSwitcher.svelte";
 
     let files: any;
     let movies: any[] = [];
-    let circumference = 2 * Math.PI * 30;
-    let percent = 0;
+    let percent = 50;
 
     let layout: LAYOUT = LAYOUT.Horizontal;
 
@@ -40,8 +40,10 @@
 </script>
 
 <div class="navbar bg-base-100 justify-between">
-    <Logo></Logo>
-    <div class="flex">
+    <div class="flex-0">
+        <Logo />
+    </div>
+    <div class="flex-2">
         <input
             multiple
             bind:files
@@ -71,12 +73,15 @@
                 files = null;
             }}
         />
-        {#if movies.length > 0}
-            <Progress {percent} />
-        {/if}
+        <!-- {#if movies.length > 0} -->
+        <Progress {percent} />
+        <!-- {/if} -->
     </div>
 
-    <ThemeSwitcher />
+    <div class="flex-end">
+        <LangSwitcher />
+        <ThemeSwitcher />
+    </div>
 </div>
 
 <div class="md:container md:mx-auto mt-4">

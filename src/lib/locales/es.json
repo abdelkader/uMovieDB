@@ -1,4 +1,7 @@
 {
-    "hello": "Hola",
-    "goodbye": "bye"
+    "OrderBy": "Ordenar por",
+    "Title": "Titulo",
+    "Year": "Anno",
+    "Rating": "Clasificación",
+    "VoteCount": "Cuenta de votos"
 }
