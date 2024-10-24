@@ -1,4 +1,6 @@
 <script lang="ts">
+    import ClipboardDialog from "./ClipboardDialog.svelte";
+
     import LayoutHandler from "./LayoutHandler.svelte";
     import { LAYOUT } from "$lib/layout";
     import OrderHandler from "./OrderHandler.svelte";
@@ -12,13 +14,13 @@
     import Progress from "$lib/Progress.svelte";
     import LangSwitcher from "./LangSwitcher.svelte";
     import { t } from "svelte-i18n";
-    import { ClipboardList } from "lucide-svelte";
 
     let files: any;
     let movies: any[] = [];
     let percent = 50;
-    let clipboard_movies: string = "";
+
     let layout: LAYOUT = LAYOUT.Horizontal;
+    let lang = "en";
 
     function DispositionChanged(event: any) {
         layout = event.detail.value;
@@ -60,7 +62,7 @@
                         "$lib/movie.worker?worker"
                     );
                     let movieWorker = new MovieWorker.default();
-                    movieWorker.postMessage({ files });
+                    movieWorker.postMessage({ files, lang });
                     movieWorker.onmessage = (event) => {
                         if (event.data) {
                             movies = [...movies, event.data];
@@ -75,47 +77,36 @@
                 files = null;
             }}
         />
-        <!-- {#if movies.length > 0} -->
-        <button
-            class="btn btn-accent btn-sm ml-2 mt-2"
-            onclick="movie_modal.showModal()"><ClipboardList /></button
-        >
-        <dialog id="movie_modal" class="modal">
-            <div class="modal-box w-11/12 max-w-5xl">
-                <label class="form-control max-w-none w-full">
-                    <div class="label">
-                        <span class="label-text">Paste movies list</span>
-                    </div>
-                    <textarea
-                        class="textarea textarea-bordered
-                        h-96 text-sm"
-                        bind:value={clipboard_movies}
-                    ></textarea>
-                    <div class="label">
-                        <span class="label-text-alt">lines</span>
-                    </div>
-                </label>
-                <div class="modal-action">
-                    <form method="dialog">
-                        <!-- if there is a button, it will close the modal -->
-                        <button
-                            class="btn"
-                            on:click={() => {
-                                if (clipboard_movies) {
-                                    movies = clipboard_movies.split("\n");
-                                }
-                            }}>Close</button
-                        >
-                    </form>
-                </div>
-            </div>
-        </dialog>
-        <Progress {percent} />
-        <!-- {/if} -->
+        <ClipboardDialog
+            on:clipboard-changed={async (event) => {
+                files = event.detail.movies;
+                if (files) {
+                    movies = [];
+                    const MovieWorker = await import(
+                        "$lib/movie.worker?worker"
+                    );
+                    let movieWorker = new MovieWorker.default();
+                    movieWorker.postMessage({ files, lang });
+                    movieWorker.onmessage = (event) => {
+                        if (event.data) {
+                            movies = [...movies, event.data];
+                            percent = Math.ceil(
+                                (movies.length / files.length) * 100,
+                            );
+                        }
+                    };
+                }
+            }}
+        />
+        {#if movies.length > 0}
+            <Progress {percent} />
+        {/if}
     </div>
 
     <div class="flex-end">
-        <LangSwitcher />
+        <LangSwitcher
+            on:lang-changed={(event) => (lang = event.detail.value)}
+        />
         <ThemeSwitcher />
     </div>
 </div>

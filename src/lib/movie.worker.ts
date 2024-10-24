@@ -8,18 +8,18 @@ let bearerToken =
 
 
 onmessage = async (event) => {
-    const { files } = event.data;
-    await getMovieDetailsFromFiles(files);
+    const { files, lang } = event.data;
+    await getMovieDetailsFromFiles(files, lang);
 };
 
 
 
-async function fetchMovieDetails(title: string, year: string | null) {
+async function fetchMovieDetails(title: string, year: string | null, lang: string) {
     try {
 
         // Prepare the search query with the title and year
         const query = encodeURIComponent(title);
-        const url = `https://api.themoviedb.org/3/search/movie?query=${query}&year=${year}&language=fr-FR`;
+        const url = `https://api.themoviedb.org/3/search/movie?query=${query}&year=${year}&language=${lang}`;
 
         // Fetch data from TMDb API with Bearer Token Authorization
         const response = await fetch(url, {
@@ -46,15 +46,15 @@ async function fetchMovieDetails(title: string, year: string | null) {
     }
 }
 
-async function getMovieDetailsFromFiles(files: any[], delay: number = 300) {
+async function getMovieDetailsFromFiles(files: any[], lang: string, delay: number = 300) {
 
     // Iterate through each file to extract movie titles and years
     for (let i = 0; i < files.length; i++) {
         try {
+            console.log(`Parsing file: ${files[i].name} with index: ${i}`);
             const { title, year } = filenameParse(files[i].name);
-
             // Fetch movie details and add to results
-            const movieDetails = await fetchMovieDetails(title, year);
+            const movieDetails = await fetchMovieDetails(title, year, lang);
 
             let movie = {
                 filename: files[i].name,
