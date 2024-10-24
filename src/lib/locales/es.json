@@ -3,5 +3,6 @@
     "Title": "Titulo",
     "Year": "Anno",
     "Rating": "Clasificación",
-    "VoteCount": "Cuenta de votos"
+    "VoteCount": "Cuenta de votos",
+    "SearchForMovies": "Buscar pelúculas"
 }

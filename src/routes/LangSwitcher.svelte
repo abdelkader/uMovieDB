@@ -1,16 +1,10 @@
 <script lang="ts">
-    import { locale, locales } from "svelte-i18n";
-
-    let selected = "en";
-
-    function OrderChanged(value: string) {
-        locale.set(value);
-    }
+    import { locale } from "svelte-i18n";
 </script>
 
 <select
-    bind:value={selected}
-    on:change={() => OrderChanged(selected)}
+    bind:value={$locale}
+    on:change={(event) => locale.set(event.target?.value)}
     id="order-by"
     class="select select-sm w-full max-w-xs"
 >

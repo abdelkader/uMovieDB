@@ -3,5 +3,6 @@
     "Title": "Titre",
     "Year": "Année",
     "Rating": "Vote",
-    "VoteCount": "Nombre de vote"
+    "VoteCount": "Nombre de vote",
+    "SearchForMovies": "Rechercher des films"
 }

@@ -11,11 +11,13 @@
     import ThemeSwitcher from "./ThemeSwitcher.svelte";
     import Progress from "$lib/Progress.svelte";
     import LangSwitcher from "./LangSwitcher.svelte";
+    import { t } from "svelte-i18n";
+    import { ClipboardList } from "lucide-svelte";
 
     let files: any;
     let movies: any[] = [];
     let percent = 50;
-
+    let clipboard_movies: string = "";
     let layout: LAYOUT = LAYOUT.Horizontal;
 
     function DispositionChanged(event: any) {
@@ -74,6 +76,40 @@
             }}
         />
         <!-- {#if movies.length > 0} -->
+        <button
+            class="btn btn-accent btn-sm ml-2 mt-2"
+            onclick="movie_modal.showModal()"><ClipboardList /></button
+        >
+        <dialog id="movie_modal" class="modal">
+            <div class="modal-box w-11/12 max-w-5xl">
+                <label class="form-control max-w-none w-full">
+                    <div class="label">
+                        <span class="label-text">Paste movies list</span>
+                    </div>
+                    <textarea
+                        class="textarea textarea-bordered
+                        h-96 text-sm"
+                        bind:value={clipboard_movies}
+                    ></textarea>
+                    <div class="label">
+                        <span class="label-text-alt">lines</span>
+                    </div>
+                </label>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button, it will close the modal -->
+                        <button
+                            class="btn"
+                            on:click={() => {
+                                if (clipboard_movies) {
+                                    movies = clipboard_movies.split("\n");
+                                }
+                            }}>Close</button
+                        >
+                    </form>
+                </div>
+            </div>
+        </dialog>
         <Progress {percent} />
         <!-- {/if} -->
     </div>
@@ -121,7 +157,7 @@
                     type="text"
                     id="table-search-users"
                     class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search for movies"
+                    placeholder={$t("SearchForMovies")}
                 />
             </div>
         {/if}

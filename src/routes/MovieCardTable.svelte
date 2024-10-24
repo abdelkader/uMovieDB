@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { t } from "svelte-i18n";
     import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
@@ -22,7 +23,7 @@
             <tr>
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center">
-                        Title
+                        {$t("Title")}
                         <a on:click={() => OrderChanged("title")} href="#"
                             ><svg
                                 class="w-3 h-3 ms-1.5"
@@ -40,7 +41,7 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center">
-                        Year
+                        {$t("Year")}
                         <a on:click={() => OrderChanged("year")} href="#"
                             ><svg
                                 class="w-3 h-3 ms-1.5"
@@ -58,7 +59,7 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center">
-                        Vote Average
+                        {$t("Rating")}
                         <a on:click={() => OrderChanged("rating")} href="#"
                             ><svg
                                 class="w-3 h-3 ms-1.5"
@@ -76,7 +77,7 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center">
-                        Vote Count
+                        {$t("VoteCount")}
                         <a on:click={() => OrderChanged("VoteCount")} href="#"
                             ><svg
                                 class="w-3 h-3 ms-1.5"

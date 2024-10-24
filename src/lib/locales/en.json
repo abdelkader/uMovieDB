@@ -3,5 +3,6 @@
     "Title": "Title",
     "Year": "Year",
     "Rating": "Rating",
-    "VoteCount": "Vote Count"
+    "VoteCount": "Vote Count",
+    "SearchForMovies": "Search for movies"
 }
