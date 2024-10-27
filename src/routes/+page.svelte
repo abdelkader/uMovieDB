@@ -13,14 +13,14 @@
     import ThemeSwitcher from "./ThemeSwitcher.svelte";
     import Progress from "$lib/Progress.svelte";
     import LangSwitcher from "./LangSwitcher.svelte";
-    import { t } from "svelte-i18n";
+    import { t, locale } from "svelte-i18n";
 
     let files: any;
     let movies: any[] = [];
     let percent = 50;
 
     let layout: LAYOUT = LAYOUT.Horizontal;
-    let lang = "en";
+    let lang = $locale;
 
     function DispositionChanged(event: any) {
         layout = event.detail.value;
@@ -105,7 +105,9 @@
 
     <div class="flex-end">
         <LangSwitcher
-            on:lang-changed={(event) => (lang = event.detail.value)}
+            on:lang-changed={(event) => {
+                lang = event.detail.value;
+            }}
         />
         <ThemeSwitcher />
     </div>

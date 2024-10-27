@@ -2,23 +2,14 @@
     import { locale } from "svelte-i18n";
     import { createEventDispatcher } from "svelte";
 
+    import { GetLocaleCode } from "$lib/utils";
     const dispatch = createEventDispatcher();
 
-    function LangChanged(event: Event) {
+    function ChangeLanguage(event: Event) {
         let lang = event.target?.value;
         locale.set(lang);
-        let value = "";
-        switch (lang) {
-            case "en":
-                value = "en-US";
-                break;
-            case "fr":
-                value = "fr-FR";
-                break;
-            case "es":
-                value = "es-ES";
-                break;
-        }
+
+        let value = GetLocaleCode(lang);
         dispatch("lang-changed", {
             value: value,
         });
@@ -27,7 +18,7 @@
 
 <select
     bind:value={$locale}
-    on:change={(event) => LangChanged(event)}
+    on:change={(event) => ChangeLanguage(event)}
     id="order-by"
     class="select select-sm w-full max-w-xs"
 >
