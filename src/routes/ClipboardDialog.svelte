@@ -23,9 +23,6 @@
                         h-96 text-sm"
                 bind:value={clipboard_movies}
             ></textarea>
-            <div class="label">
-                <span class="label-text-alt">lines</span>
-            </div>
         </label>
         <div class="modal-action">
             <form method="dialog">

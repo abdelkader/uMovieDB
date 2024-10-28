@@ -1,11 +1,6 @@
 // place files you want to import through the `$lib` alias in this folder.
 import { filenameParse } from '@ctrl/video-filename-parser';
 
-let bearerToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NGY4MWM3OWRkYWUzOWU2MDNhMTdmOGY3M2FiYTkzYiIsIm5iZiI6MTcyNzI5NjUzMi4yMDczODcsInN1YiI6IjUxMmJkMzBkNzYwZWUzNzJhMjExNTliMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xWWJP5V1aMFJQgJh7V18ZE_oN0XydqJjSYBhDF-cfn0";
-
-
-
 
 onmessage = async (event) => {
     const { files, lang } = event.data;
@@ -19,17 +14,10 @@ async function fetchMovieDetails(title: string, year: string | null, lang: strin
 
         // Prepare the search query with the title and year
         const query = encodeURIComponent(title);
-        const url = `https://api.themoviedb.org/3/search/movie?query=${query}&year=${year}&language=${lang}`;
-
+        const url = `https://umoviedb-api.vercel.app/api/moviedb?query=${query}&year=${year}&language=${lang}`;
+        console.log(url);
         // Fetch data from TMDb API with Bearer Token Authorization
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${bearerToken}`, // Bearer token header
-                "Content-Type": "application/json",
-            },
-        });
-
+        const response = await fetch(url);
         const data = await response.json();
 
         // Check if we have any results
