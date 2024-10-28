@@ -15,7 +15,7 @@ async function fetchMovieDetails(title: string, year: string | null, lang: strin
         // Prepare the search query with the title and year
         const query = encodeURIComponent(title);
         const url = `https://umoviedb-api.vercel.app/api/moviedb?query=${query}&year=${year}&language=${lang}`;
-        console.log(url);
+
         // Fetch data from TMDb API with Bearer Token Authorization
         const response = await fetch(url);
         const data = await response.json();

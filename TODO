@@ -1,5 +1,5 @@
 [X] Change progress bar, and use the daisy ui one.
-[ ] added i18n.
-[ ] Handle search bar. 
+[X] added i18n.
+[ ] add search bar. 
 [ ] Handle descendant and ascendant order
 [ ] Save Preferences to localstorage, like layout, lang.. etc

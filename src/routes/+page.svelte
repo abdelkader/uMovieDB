@@ -49,7 +49,7 @@
         const MovieWorker = await import("$lib/movie.worker?worker");
         movieWorker = new MovieWorker.default();
 
-        movieWorker.onmessage = (event) => {
+        movieWorker.onmessage = (event: any) => {
             if (event.data) {
                 movies = [...movies, event.data];
                 percent = Math.ceil((movies.length / files.length) * 100);
@@ -92,7 +92,14 @@
                 }
             }}
         />
-        <RefreshButton></RefreshButton>
+        <RefreshButton
+            on:refresh-clicked={() => {
+                if (files) {
+                    movies = [];
+                    movieWorker.postMessage({ files, lang: langCode });
+                }
+            }}
+        />
 
         {#if movies.length > 0}
             <Progress {percent} />
