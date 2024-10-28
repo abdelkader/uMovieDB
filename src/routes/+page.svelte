@@ -1,4 +1,6 @@
 <script lang="ts">
+    import RefreshButton from "./RefreshButton.svelte";
+    import { onMount } from "svelte";
     import ClipboardDialog from "./ClipboardDialog.svelte";
 
     import LayoutHandler from "./LayoutHandler.svelte";
@@ -15,12 +17,13 @@
     import LangSwitcher from "./LangSwitcher.svelte";
     import { t, locale } from "svelte-i18n";
 
+    let movieWorker: any = null;
     let files: any;
     let movies: any[] = [];
     let percent = 50;
 
     let layout: LAYOUT = LAYOUT.Horizontal;
-    let lang = $locale;
+    let langCode = $locale;
 
     function DispositionChanged(event: any) {
         layout = event.detail.value;
@@ -41,6 +44,21 @@
             }
         });
     }
+
+    async function HandleMovieWorker() {
+        const MovieWorker = await import("$lib/movie.worker?worker");
+        movieWorker = new MovieWorker.default();
+
+        movieWorker.onmessage = (event) => {
+            if (event.data) {
+                movies = [...movies, event.data];
+                percent = Math.ceil((movies.length / files.length) * 100);
+            }
+        };
+    }
+    onMount(() => {
+        HandleMovieWorker();
+    });
 </script>
 
 <div class="navbar bg-base-100 justify-between">
@@ -58,19 +76,7 @@
             on:change={async () => {
                 if (files) {
                     movies = [];
-                    const MovieWorker = await import(
-                        "$lib/movie.worker?worker"
-                    );
-                    let movieWorker = new MovieWorker.default();
-                    movieWorker.postMessage({ files, lang });
-                    movieWorker.onmessage = (event) => {
-                        if (event.data) {
-                            movies = [...movies, event.data];
-                            percent = Math.ceil(
-                                (movies.length / files.length) * 100,
-                            );
-                        }
-                    };
+                    movieWorker.postMessage({ files, lang: langCode });
                 }
             }}
             on:click={() => {
@@ -82,22 +88,12 @@
                 files = event.detail.movies;
                 if (files) {
                     movies = [];
-                    const MovieWorker = await import(
-                        "$lib/movie.worker?worker"
-                    );
-                    let movieWorker = new MovieWorker.default();
-                    movieWorker.postMessage({ files, lang });
-                    movieWorker.onmessage = (event) => {
-                        if (event.data) {
-                            movies = [...movies, event.data];
-                            percent = Math.ceil(
-                                (movies.length / files.length) * 100,
-                            );
-                        }
-                    };
+                    movieWorker.postMessage({ files, lang: langCode });
                 }
             }}
         />
+        <RefreshButton></RefreshButton>
+
         {#if movies.length > 0}
             <Progress {percent} />
         {/if}
@@ -106,7 +102,7 @@
     <div class="flex-end">
         <LangSwitcher
             on:lang-changed={(event) => {
-                lang = event.detail.value;
+                langCode = event.detail.value;
             }}
         />
         <ThemeSwitcher />

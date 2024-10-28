@@ -51,7 +51,6 @@ async function getMovieDetailsFromFiles(files: any[], lang: string, delay: numbe
     // Iterate through each file to extract movie titles and years
     for (let i = 0; i < files.length; i++) {
         try {
-            console.log(`Parsing file: ${files[i].name} with index: ${i}`);
             const { title, year } = filenameParse(files[i].name);
             // Fetch movie details and add to results
             const movieDetails = await fetchMovieDetails(title, year, lang);

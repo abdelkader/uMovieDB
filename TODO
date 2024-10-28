@@ -2,3 +2,4 @@
 [ ] added i18n.
 [ ] Handle search bar. 
 [ ] Handle descendant and ascendant order
+[ ] Save Preferences to localstorage, like layout, lang.. etc
