@@ -29,5 +29,4 @@ A Simple movie parser. The tool scans a folder, or a list of pasted files, and b
 
 ## 👷 Contributing and help
 Contributions are always welcome! Check ths projet or ths issue page for ideas.
-- 📝 [**Report a bug**](https://github.com/abdelkader/vCardEditor/issues)
-- 🙋‍♀️ [**Request a feature**](https://github.com/abdelkader/vCardEditor/discussions)
+- 📝 [**Report a bug, feature**](https://github.com/abdelkader/uMovieDB/issues)
