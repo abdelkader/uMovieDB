@@ -10,9 +10,9 @@
 
 ## uMovieDB Parser
 A Simple movie parser. The tool scans a folder, or a list of pasted files, and based on TheMovieDB, the tool will show you a nice looking list of your movies.
+
 ![xpZWWbiS2w](https://github.com/user-attachments/assets/b658b4e1-c6da-40cb-8d53-ac094bc13e78)
 
-<p align="center"><img src="https://user-images.githubusercontent.com/169070/236289228-106c1489-e01d-400c-968e-92d3e2be74ab.png" width="800"></p>
 
 
 ## ✅ Features
